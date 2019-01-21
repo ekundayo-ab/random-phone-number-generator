@@ -1,20 +1,93 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div style="text-align:center">
-  <h1>
-    Welcome to {{ title }}!
-  </h1>
-  <img width="300" alt="Angular Logo" src="data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHZpZXdCb3g9IjAgMCAyNTAgMjUwIj4KICAgIDxwYXRoIGZpbGw9IiNERDAwMzEiIGQ9Ik0xMjUgMzBMMzEuOSA2My4ybDE0LjIgMTIzLjFMMTI1IDIzMGw3OC45LTQzLjcgMTQuMi0xMjMuMXoiIC8+CiAgICA8cGF0aCBmaWxsPSIjQzMwMDJGIiBkPSJNMTI1IDMwdjIyLjItLjFWMjMwbDc4LjktNDMuNyAxNC4yLTEyMy4xTDEyNSAzMHoiIC8+CiAgICA8cGF0aCAgZmlsbD0iI0ZGRkZGRiIgZD0iTTEyNSA1Mi4xTDY2LjggMTgyLjZoMjEuN2wxMS43LTI5LjJoNDkuNGwxMS43IDI5LjJIMTgzTDEyNSA1Mi4xem0xNyA4My4zaC0zNGwxNy00MC45IDE3IDQwLjl6IiAvPgogIDwvc3ZnPg==">
-</div>
-<h2>Here are some links to help you start: </h2>
-<ul>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/tutorial">Tour of Heroes</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://angular.io/cli">CLI Documentation</a></h2>
-  </li>
-  <li>
-    <h2><a target="_blank" rel="noopener" href="https://blog.angular.io/">Angular blog</a></h2>
-  </li>
-</ul>
+<section class="hero is-info">
+  <div class="hero-body">
+    <div class="container">
+      <h1 class="title">
+        Random Phone Numbers Generator
+      </h1>
+      <h2 class="subtitle">
+        Generate a list of random phone numbers
+      </h2>
+    </div>
+  </div>
+</section>
 
+<div class="section">
+  <div class="container">
+    <form [formGroup]="numberForm">
+      <div class="columns">
+        <div class="column">
+          <div class="field has-background-light">
+            <label class="label">Enter amount of numbers to generate</label>
+            <div class="control">
+              <input
+                type="number"
+                formControlName="amountOfNumbers"
+                class="input"
+                placeholder="Amount of phone numbers to generate">
+              <span *ngIf="maxAmountExceeded" class="has-text-danger">Maximum amount of numbers allowed is 10000</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="field has-background-light">
+            <label class="label">Sort By</label>
+            <div class="control">
+              <div class="select">
+                <select (change)="sortNumbers()" formControlName="sortState">
+                  <option class="asc-option" value="asc">Ascending</option>
+                  <option value="desc">Descending</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="column">
+          <div class="field has-background-light">
+            <label class="label">Save</label>
+            <div class="control save">
+              <button type="button" (click)="saveNumbers()" class="button">Save list to file</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+    <div class="buttons has-addons is-centered">
+      <button
+        class="button is-info is-link is-outlined is-fullwidth is-medium"
+        (click)="generateNumbers()"
+        [disabled]="generatingNumbers"
+        [ngClass]="{'is-loading': generatingNumbers}"
+      >Generate</button>
+    </div>
+
+    <article class="message">
+      <div class="message-header">
+        <p>Arrangement notice!</p>
+        <button class="delete" aria-label="delete"></button>
+      </div>
+      <div class="message-body">
+        Numbers are sorted from left to right <b>=======></b>
+      </div>
+    </article>
+
+    <div class="columns has-background-white">
+      <nav class="panel column">
+        <p class="panel-heading">
+          Phone Numbers
+        </p>
+        <a *ngIf="!phoneNumbers.length" class="panel-block">
+          No phone numbers generated yet!
+        </a>
+
+        <div class="phone-list">
+          <a *ngFor="let phoneNumber of phoneNumbers" class="panel-block has-text-weight-semibold">
+            0{{phoneNumber}}
+          </a>
+        </div>
+      </nav>
+    </div>
+
+  </div>
+</div>

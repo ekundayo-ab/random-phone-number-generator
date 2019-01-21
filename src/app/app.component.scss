@@ -1,0 +1,19 @@
+.column .field {
+  padding: 0.75rem;
+  height: 100%;
+}
+
+.phone-list {
+  max-height:  300px;
+  overflow: scroll;
+  display: flex;
+  flex-wrap: wrap;
+
+  a {
+    width: 160px;
+  }
+}
+
+.has-addons {
+  margin-top: 1rem;
+}
